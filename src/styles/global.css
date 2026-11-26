@@ -133,8 +133,11 @@ nav a:hover { color: var(--ink); }
 .game-body p { color: var(--muted); }
 .game-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 20px 20px; flex-wrap: wrap; margin-top: auto; }
 .more { font: 600 15px/1 var(--display); text-decoration: none; }
-.play-badge { display: inline-block; align-self: flex-start; }
-.play-badge img { height: 58px; width: auto; }
+.stores { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 10px 12px; }
+.store-badge { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; }
+.store-badge img { height: 50px; width: auto; }
+.store-badge.soon img { opacity: .45; filter: grayscale(1); }
+.soon-label { font: 600 12px/1 var(--display); color: var(--muted); letter-spacing: .02em; }
 .download { display: flex; flex-direction: column; gap: 6px; }
 .test-note { font-size: 14px; color: var(--muted); max-width: 36em; margin: 4px 0 0; }
 
@@ -158,6 +161,8 @@ nav a:hover { color: var(--ink); }
 .contact-card p { color: #c9d1e3; margin: 0; }
 
 /* game page */
+.game-hero { background: #10124a; border-bottom: 1px solid var(--line); }
+.game-hero img { width: 100%; max-width: 1440px; margin: 0 auto; }
 .crumb { margin: 28px 0 0; font: 500 15px/1 var(--display); }
 .crumb a { text-decoration: none; display: inline-block; padding: 12px 0; margin: -12px 0; }
 .product-head { display: flex; align-items: flex-start; gap: 24px; padding-top: 28px; }
@@ -165,7 +170,6 @@ nav a:hover { color: var(--ink); }
 .product-head .lead { margin-bottom: 12px; }
 .app-icon { width: 120px; height: 120px; border-radius: 28px; flex: none; box-shadow: var(--shadow); }
 .download-box { margin-top: 18px; }
-.feature-graphic { width: 100%; border-radius: var(--radius); margin-top: 32px; box-shadow: var(--shadow); }
 .features { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding-top: 32px; }
 @media (min-width: 560px) { .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1000px) { .features { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

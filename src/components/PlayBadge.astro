@@ -1,17 +1,35 @@
 ---
-// The badge files are trimmed to the artwork, so CSS sizes them by height and they line up with the text.
+// The store badges of a game. The badge files are trimmed to the artwork, so CSS sizes them by height
+// and they line up with each other and the text. Apple's badge may link only to a released app, so
+// while the iOS version is on its way it is shown dimmed, without a link, with a caption.
 import type { Game, Lang } from '../data/site';
 import { text } from '../data/site';
 import { asset } from '../lib/paths';
 interface Props { game: Game; lang: Lang; note?: boolean }
 const { game, lang, note = false } = Astro.props;
 const t = text[lang];
+const appleAlt = lang === 'tr' ? "App Store'dan indirin" : 'Download on the App Store';
 ---
-{game.play && (
+{(game.play || game.appStore) && (
   <div class="download">
-    <a class="play-badge" href={game.play} rel="noopener">
-      <img src={asset(`badges/google-play-${lang}.png`)} alt={lang === 'tr' ? "Google Play'den alın" : 'Get it on Google Play'} width={lang === 'tr' ? 646 : 564} height={lang === 'tr' ? 192 : 168} />
-    </a>
+    <div class="stores">
+      {game.play && (
+        <a class="store-badge" href={game.play} rel="noopener">
+          <img src={asset(`badges/google-play-${lang}.png`)} alt={lang === 'tr' ? "Google Play'den alın" : 'Get it on Google Play'} width={lang === 'tr' ? 646 : 564} height={lang === 'tr' ? 192 : 168} />
+        </a>
+      )}
+      {game.appStore === 'soon' && (
+        <span class="store-badge soon">
+          <img src={asset(`badges/app-store-${lang}.svg`)} alt={`${appleAlt}: ${t.appStoreSoon}`} width={lang === 'tr' ? 151 : 120} height="40" />
+          <span class="soon-label" aria-hidden="true">{t.appStoreSoon}</span>
+        </span>
+      )}
+      {game.appStore && game.appStore !== 'soon' && (
+        <a class="store-badge" href={game.appStore} rel="noopener">
+          <img src={asset(`badges/app-store-${lang}.svg`)} alt={appleAlt} width={lang === 'tr' ? 151 : 120} height="40" />
+        </a>
+      )}
+    </div>
     {game.testing && note && (
       <p class="test-note">{t.testingNote} <a href={game.testing} rel="noopener">{t.joinTest} →</a></p>
     )}

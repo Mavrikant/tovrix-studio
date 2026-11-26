@@ -44,13 +44,18 @@ export interface Game {
   name: string;
   icon: string;
   feature: string;
-  screenshots: string[];
+  /** the image at the top of the game page, one per language: phones showing the game in that language */
+  collage: Record<Lang, string>;
+  /** screenshots taken in each language from the current build, under assets/<slug>/<lang>/ */
+  screenshots: (lang: Lang) => string[];
   /** written by the game's own repository into public/<slug>/privacy/, English only */
   privacy: string;
   play?: string;
   /** set while the game is only in closed testing on Google Play */
   testing?: string;
-  text: Record<Lang, { short: string; status: string; lead: string; body: string; features: [string, string[]][] }>;
+  /** 'soon' shows Apple's badge dimmed and without a link (Apple allows the badge to link only to a released app); later the App Store URL */
+  appStore?: 'soon' | string;
+  text: Record<Lang, { short: string; lead: string; body: string; features: [string, string[]][] }>;
 }
 
 export const games: Game[] = [
@@ -59,14 +64,15 @@ export const games: Game[] = [
     name: 'Orbit Stackers',
     icon: 'assets/orbit-stackers/icon.png',
     feature: 'assets/orbit-stackers/feature.jpg',
-    screenshots: ['01-home', '02-battle', '03-cards', '04-league', '05-result'].map((s) => `assets/orbit-stackers/${s}.jpg`),
+    collage: { en: 'assets/orbit-stackers/collage-en.jpg', tr: 'assets/orbit-stackers/collage-tr.jpg' },
+    screenshots: (lang) => ['01-home', '02-battle', '03-cards', '04-league', '05-result'].map((s) => `assets/orbit-stackers/${lang}/${s}.jpg`),
     privacy: 'orbit-stackers/privacy/',
     play: 'https://play.google.com/store/apps/details?id=com.tovrixstudio.orbitstackers',
     testing: 'https://play.google.com/apps/testing/com.tovrixstudio.orbitstackers',
+    appStore: 'soon',
     text: {
       en: {
         short: 'Stack space modules, outsmart your rival and race your tower to orbit!',
-        status: 'Coming soon to Google Play',
         lead: 'Build the tallest tower in the galaxy, before your rival does.',
         body: 'Orbit Stackers is a real-time physics race. Station modules drop from above: steer them, spin them and stack them on your launch deck. Every piece obeys gravity, so one careless drop can send half your tower tumbling into space. Reach the Orbit Line and keep your tower above it until your uplink is fully charged: victory is yours.',
         features: [
@@ -78,7 +84,6 @@ export const games: Game[] = [
       },
       tr: {
         short: 'Uzay modüllerini diz, rakibini alt et ve kuleni yörüngeye ilk sen ulaştır!',
-        status: "Yakında Google Play'de",
         lead: 'Galaksinin en yüksek kulesini inşa et, rakibinden önce.',
         body: "Orbit Stackers gerçek zamanlı bir fizik yarışı. İstasyon modülleri yukarıdan düşer: onları yönlendir, döndür ve fırlatma platformuna diz. Her parça yerçekimine uyar; tek bir dikkatsiz bırakış kulenin yarısını uzaya savurabilir. Yörünge Çizgisine ulaş ve uplink'in dolana kadar kuleni çizginin üstünde tut: zafer senin.",
         features: [
@@ -119,9 +124,11 @@ export const text = {
     deletion: 'Deleting your account',
     legalNote: '',
     screenshots: 'Screenshots',
+    collageAlt: 'Five phones showing Orbit Stackers: the card hangar, the home screen, a match, a victory and the leaderboard',
     download: 'Download',
     testingNote: 'Orbit Stackers is in closed testing. The store page opens once it is released; testers on the list can join now.',
     joinTest: 'Join the test',
+    appStoreSoon: 'Coming to the App Store',
     back: 'All games',
     brandTitle: 'Brand',
     brandIntro: 'The Tovrix Studio identity: the logo, its colours and type, and the files to use them.',
@@ -188,9 +195,11 @@ export const text = {
     deletion: 'Hesabını silmek',
     legalNote: 'Gizlilik politikası İngilizcedir.',
     screenshots: 'Ekran görüntüleri',
+    collageAlt: 'Orbit Stackers’ı gösteren beş telefon: kart hangarı, ana ekran, bir maç, bir zafer ve sıralama',
     download: 'İndir',
     testingNote: 'Orbit Stackers kapalı testte. Mağaza sayfası yayınlandığında açılacak; test listesindekiler şimdiden katılabilir.',
     joinTest: 'Teste katıl',
+    appStoreSoon: "App Store'a geliyor",
     back: 'Tüm oyunlar',
     brandTitle: 'Marka',
     brandIntro: 'Tovrix Studio kimliği: logo, renkleri, yazı tipleri ve kullanım dosyaları.',
