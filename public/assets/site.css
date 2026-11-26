@@ -1,22 +1,49 @@
 /* Stylesheet of the legal pages that the games' repositories write into this site (for example
-   orbit-stackers/privacy/). Same brand as the Astro pages, without their build step. */
-:root { color-scheme: light dark; --bg: #fffaf4; --ink: #1b2a4a; --muted: #56617a; --line: #f0e2d2; --link: #d9472a; --navy: #1b2a4a; --cream: #fff4e8; }
-@media (prefers-color-scheme: dark) { :root { --bg: #0d1526; --ink: #fff4e8; --muted: #a9b3c9; --line: #26324f; --link: #ff8a6e; } }
+   orbit-stackers/privacy/). Same brand, fonts, header and footer as the Astro pages, without their build step.
+   Keep it in step with src/styles/global.css. */
+@font-face { font-family: 'Inter Variable'; font-style: normal; font-display: swap; font-weight: 100 900; src: url(fonts/inter-latin-ext-wght-normal.woff2) format('woff2-variations'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'Inter Variable'; font-style: normal; font-display: swap; font-weight: 100 900; src: url(fonts/inter-latin-wght-normal.woff2) format('woff2-variations'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'Outfit Variable'; font-style: normal; font-display: swap; font-weight: 100 900; src: url(fonts/outfit-latin-ext-wght-normal.woff2) format('woff2-variations'); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'Outfit Variable'; font-style: normal; font-display: swap; font-weight: 100 900; src: url(fonts/outfit-latin-wght-normal.woff2) format('woff2-variations'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+
+:root { color-scheme: light dark; --bg: #fffaf4; --ink: #1b2a4a; --muted: #56617a; --line: #f0e2d2; --link: #c43c1f; --coral: #ff6b4a; --navy: #1b2a4a; --cream: #fff4e8;
+  --display: 'Outfit Variable', 'Outfit', system-ui, sans-serif; --text: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+@media (prefers-color-scheme: dark) { :root { --bg: #0d1526; --ink: #fff4e8; --muted: #a9b3c9; --line: #2f3d5e; --link: #ff8a6e; } }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+main { flex: 1 0 auto; }
 a { color: var(--link); text-underline-offset: 3px; overflow-wrap: anywhere; }
+:where(a):focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 6px; }
+code { font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; font-size: 0.875em; }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
-.top { border-bottom: 1px solid var(--line); }
-.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; min-height: 68px; flex-wrap: wrap; }
-.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font: 600 21px/1 Outfit, system-ui, sans-serif; }
-.mark { width: 34px; height: 34px; }
-@media (prefers-color-scheme: dark) { .mark { background: #fff4e8; border-radius: 8px; } }
-nav { display: flex; gap: 18px; }
-nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
-.doc { max-width: 780px; padding-top: 32px; padding-bottom: 64px; }
-.doc h1 { font: 700 clamp(32px, 5vw, 44px)/1.12 Outfit, system-ui, sans-serif; letter-spacing: -0.02em; margin: 16px 0; }
-.doc h2 { font: 650 22px/1.2 Outfit, system-ui, sans-serif; margin: 32px 0 8px; }
+
+.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 8px 22px; min-height: 68px; flex-wrap: wrap; padding-top: 6px; padding-bottom: 6px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; }
+.mark { width: 34px; height: 34px; flex: none; }
+/* older pages use the image of the mark, whose pillar is navy: give it a light tile in dark mode */
+@media (prefers-color-scheme: dark) { img.mark { background: var(--cream); border-radius: 8px; } }
+.wordmark { font: 400 22px/1 var(--display); letter-spacing: -0.01em; }
+.wordmark b { font-weight: 650; }
+.brand > span:not(.wordmark) { font: 600 22px/1 var(--display); }
+nav { display: flex; gap: 2px 18px; flex-wrap: wrap; margin-left: auto; }
+nav a { color: var(--muted); text-decoration: none; font: 500 15px/1 var(--display); padding: 8px 0; }
+nav a:hover { color: var(--ink); }
+
+.doc { padding-top: 48px; padding-bottom: clamp(56px, 8vw, 96px); }
+.doc > * { max-width: 46em; }
+.doc h1 { font: 700 clamp(32px, 5vw, 44px)/1.12 var(--display); letter-spacing: -0.02em; margin: 0 0 12px; }
+.doc h2 { font: 650 22px/1.2 var(--display); letter-spacing: -0.02em; margin: 32px 0 12px; }
+.doc ul, .doc ol { padding-left: 22px; }
 .doc li { margin: 6px 0; }
-.doc code { font-size: 0.92em; }
-.bottom { background: var(--navy); color: #c9d1e3; padding: 28px 0 36px; font-size: 15px; }
+
+.bottom { background: var(--navy); color: #c9d1e3; padding: 32px 0 40px; font-size: 15px; }
+@media (prefers-color-scheme: dark) { .bottom { background: #080e1b; } }
 .bottom .wrap { display: flex; gap: 8px 24px; flex-wrap: wrap; }
+.bottom a { color: var(--cream); }
+
+@media (max-width: 760px) {
+  .top { position: static; }
+  .top .wrap { min-height: 0; padding-top: 12px; padding-bottom: 10px; }
+  nav { width: 100%; margin-left: 0; }
+}

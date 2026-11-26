@@ -57,8 +57,8 @@ const navHref = (h: string) => (h.startsWith('#') ? `${page(lang)}${h}` : page(l
         </a>
         <nav aria-label="Main">
           {nav.map(([k, h]) => <a href={navHref(h)}>{t.nav[k]}</a>)}
-          <a class="lang" href={page(other, path)} hreflang={other} lang={other}>{t.otherLabel}</a>
         </nav>
+        <a class="lang" href={page(other, path)} hreflang={other} lang={other}>{t.otherLabel}</a>
       </div>
     </header>
     <main id="main">
