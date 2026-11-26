@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PlayBadge from './PlayBadge.astro';
+import { studio, text, type Game, type Lang } from '../data/site';
+import { asset, page } from '../lib/paths';
+interface Props { game: Game; lang: Lang }
+const { game, lang } = Astro.props;
+const c = game.text[lang];
+const t = text[lang];
+---
+<Layout lang={lang} path={`${game.slug}/`} title={`${game.name} · ${studio.name}`} description={c.short} image={game.feature}>
+  <div class="wrap">
+    <p class="crumb"><a href={`${page(lang)}#games`}>← {t.back}</a></p>
+    <section class="product-head">
+      <img class="app-icon" src={asset(game.icon)} alt="" width="120" height="120" />
+      <div>
+        <h1>{game.name}</h1>
+        <p class="lead">{c.short}</p>
+        <span class="chip">{c.status}</span>
+      </div>
+    </section>
+    <section class="download-box">
+      <h2 class="visually-hidden">{t.download}</h2>
+      <PlayBadge game={game} lang={lang} note />
+    </section>
+    <img class="feature-graphic" src={asset(game.feature)} alt={game.name} width="1024" height="500" />
+    <section class="section-tight"><h2>{c.lead}</h2><p class="body">{c.body}</p></section>
+    <section class="features">
+      {c.features.map(([h, items]) => (
+        <div class="feature"><h3>{h}</h3><ul>{items.map((i) => <li>{i}</li>)}</ul></div>
+      ))}
+    </section>
+    <section class="section-tight">
+      <h2>{t.screenshots}</h2>
+      <div class="shots">
+        {game.screenshots.map((s) => <img src={asset(s)} alt="" width="270" height="480" loading="lazy" />)}
+      </div>
+    </section>
+    <section id="legal" class="section-tight legal">
+      <h2>{t.legal}</h2>
+      <ul>
+        <li><a href={asset(game.privacy)}>{t.privacy}</a></li>
+        <li><a href={`${asset(game.privacy)}#deleting-your-account`}>{t.deletion}</a></li>
+      </ul>
+      {t.legalNote && <p class="muted">{t.legalNote}</p>}
+    </section>
+  </div>
+</Layout>

@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { brand, studio, text, type Lang } from '../data/site';
+import { asset } from '../lib/paths';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = text[lang];
+---
+<Layout lang={lang} path="brand/" title={`${t.brandTitle} · ${studio.name}`} description={t.brandIntro}>
+  <div class="wrap">
+    <section class="page-head">
+      <h1>{t.brandTitle}</h1>
+      <p class="lead">{t.brandIntro}</p>
+    </section>
+
+    <section class="section-tight">
+      <h2>{t.brandLogoTitle}</h2>
+      <div class="logo-stage">
+        <div class="stage light"><img src={asset('brand/tovrix-logo.svg')} alt="Tovrix Studio" width="317" height="64" /></div>
+        <div class="stage dark"><img src={asset('brand/tovrix-logo-reverse.svg')} alt="Tovrix Studio" width="317" height="64" /></div>
+      </div>
+      <p class="body">{t.brandLogoBody}</p>
+    </section>
+
+    <section class="section-tight">
+      <h2>{t.brandColors}</h2>
+      <ul class="swatches">
+        {brand.colors.map((c) => (
+          <li class="swatch">
+            <span class="sw" style={`background:${c.hex}`}></span>
+            <div><h3>{c.name}</h3><code>{c.hex}</code><p>{c.use[lang]}</p></div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="section-tight">
+      <h2>{t.brandType}</h2>
+      <div class="type-specimens">
+        <div class="spec"><span class="spec-name">Outfit</span><p class="spec-sample display">Aa Bb Çç Ğğ 123</p><p class="spec-sample display small">Tovrix Studio</p></div>
+        <div class="spec"><span class="spec-name">Inter</span><p class="spec-sample">Aa Bb Çç Ğğ 123</p><p class="spec-sample small">{t.heroTitle}</p></div>
+      </div>
+      <p class="body">{t.brandTypeBody}</p>
+    </section>
+
+    <section class="section-tight">
+      <h2>{t.brandFiles}</h2>
+      <p class="muted">{t.brandFilesBody}</p>
+      <ul class="files">
+        {brand.files.map((f) => (
+          <li class="file">
+            <div class={`file-prev ${f.dark ? 'dark' : 'light'}`}><img src={asset(f.file)} alt="" loading="lazy" /></div>
+            <a href={asset(f.file)} download>{f.label[lang]} ↓</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</Layout>

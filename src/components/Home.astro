@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GameCard from './GameCard.astro';
+import { games, studio, text, type Lang } from '../data/site';
+import { asset } from '../lib/paths';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = text[lang];
+---
+<Layout lang={lang} path="" title={`${studio.name} · ${t.heroKicker}`} description={t.heroBody}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">{t.heroKicker}</p>
+        <h1>{t.heroTitle}</h1>
+        <p class="lead">{t.heroBody}</p>
+        <a class="btn" href="#games">{t.heroCta} →</a>
+      </div>
+      <div class="tower" aria-hidden="true">
+        <span class="blk b1"></span><span class="blk b2"></span><span class="blk b3"></span><span class="blk b4"></span><span class="blk b5"></span>
+        <span class="orbit"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="games" class="section">
+    <div class="wrap">
+      <h2>{t.games}</h2>
+      <p class="muted">{t.gamesIntro}</p>
+      <div class="games">
+        {games.map((g) => <GameCard game={g} lang={lang} />)}
+      </div>
+    </div>
+  </section>
+
+  <section id="studio" class="section alt">
+    <div class="wrap">
+      <h2>{t.about}</h2>
+      <div class="values">
+        {t.values.map(([h, p], i) => (
+          <div class="value"><span class="num">0{i + 1}</span><h3>{h}</h3><p>{p}</p></div>
+        ))}
+      </div>
+      <h2 class="sub">{t.team}</h2>
+      <p class="muted">{t.teamIntro}</p>
+      <ul class="team">
+        {studio.team.map((m) => (
+          <li class="person">
+            <img src={asset(m.photo)} alt="" width="72" height="72" loading="lazy" />
+            <div><h3>{m.name}</h3><a href={m.linkedin} rel="noopener">LinkedIn ↗</a></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="wrap contact">
+      <div>
+        <h2>{t.contact}</h2>
+        <p class="muted">{t.contactIntro}</p>
+      </div>
+      <div class="contact-card">
+        <a class="mail" href={`mailto:${studio.email}`}>{studio.email}</a>
+        <p>{studio.name}<br />{studio.address}</p>
+      </div>
+    </div>
+  </section>
+</Layout>
