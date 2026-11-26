@@ -1,0 +1,42 @@
+---
+// Careers. There are no open positions yet; the page says so plainly and invites people to write.
+import Layout from '../layouts/Layout.astro';
+import { studio, text, type Lang } from '../data/site';
+import { page } from '../lib/paths';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = text[lang];
+const subject = encodeURIComponent(lang === 'en' ? 'Joining Tovrix Studio' : "Tovrix Studio'ya katılmak");
+---
+<Layout lang={lang} path="careers/" title={`${t.careers} · ${studio.name}`} description={t.careersIntro}>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">{t.careersKicker}</p>
+      <h1>{t.careers}</h1>
+      <p class="lead">{t.careersIntro}</p>
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="wrap">
+      <h2>{t.careersHow}</h2>
+      <div class="values">
+        {t.careersWays.map(([h, p], i) => (
+          <div class="value"><span class="num">0{i + 1}</span><h3>{h}</h3><p>{p}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap contact">
+      <div>
+        <h2>{t.careersOpen}</h2>
+        <p class="muted">{t.careersNone}</p>
+        <p class="muted">{t.careersPrivacy} <a href={page(lang, 'privacy/')}>{t.sitePrivacy}</a></p>
+      </div>
+      <div class="contact-card">
+        <a class="mail" href={`mailto:${studio.email}?subject=${subject}`}>{studio.email}</a>
+        <p>{t.careersSend}</p>
+      </div>
+    </div>
+  </section>
+</Layout>

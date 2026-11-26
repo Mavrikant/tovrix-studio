@@ -1,0 +1,60 @@
+---
+// Support and frequently asked questions. Answers describe what the games do today; keep them in step with the games.
+import Layout from '../layouts/Layout.astro';
+import { games, studio, text, type Lang } from '../data/site';
+import { asset, page } from '../lib/paths';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = text[lang];
+const mail = `mailto:${studio.email}`;
+const os = games.find((g) => g.slug === 'orbit-stackers')!;
+const deletion = `${asset(os.privacy)}#deleting-your-account`;
+
+const faq: Record<Lang, [string, string][]> = {
+  en: [
+    ['How do I keep my progress, or move it to a new phone?', 'Open <b>Settings &gt; Account</b> and sign in with your email address or with Google. On the new phone, install the game and sign in with the same account. Until you sign in, your progress belongs to a guest account on that one phone, and it is lost if you uninstall the game or lose the phone.'],
+    ["I bought something and it did not arrive.", 'Open the game while you are online: a purchase is added as soon as Google Play confirms it, which can take a moment. If Google Play cannot confirm it, Google refunds it automatically within a few days. If it still has not arrived, write to us with the order number from your Google Play receipt (it starts with GPA.).'],
+    ['How do I get a refund?', 'Purchases are made through Google Play, so refunds go through Google: open <a href="https://play.google.com/store/account/orderhistory" rel="noopener">your Google Play order history</a> and choose "Request a refund". If Google cannot help, write to us.'],
+    ['How do I cancel VIP?', 'In the Google Play app: tap your profile picture, then <b>Payments &amp; subscriptions &gt; Subscriptions</b>, choose the game and cancel. VIP stays active until the end of the period you paid for. Deleting the game does not cancel the subscription.'],
+    ['How do I delete my account?', `In the game: <b>Settings &gt; Delete account</b>. Or by email: see <a href="${deletion}">deleting your account</a> for what to write.`],
+    ['Are my rivals real players?', 'In ranked play we look for a real player first. When nobody is free, you race an AI pilot, and its name carries an <b>AI</b> tag, so you always know.'],
+    ["Someone has an offensive name.", "Tap the player's name on the leaderboard and report it. After several reports the name is replaced by a neutral one. The player is not told who reported it."],
+    ['Can I play without internet?', 'Yes. Practice and matches against AI pilots work offline. Ranked races against other players, friends and the leaderboard need a connection.'],
+    ['How do I turn notifications off?', 'The daily reminder has a switch in <b>Settings</b>. You can also turn off all notifications of the game in your phone\'s settings.'],
+  ],
+  tr: [
+    ['İlerlememi nasıl korurum ya da yeni telefona nasıl taşırım?', '<b>Ayarlar &gt; Hesap</b> bölümünü aç ve e-posta adresinle ya da Google ile giriş yap. Yeni telefonda oyunu yükle ve aynı hesapla giriş yap. Giriş yapana kadar ilerlemen yalnızca o telefondaki bir misafir hesaba aittir; oyunu silersen ya da telefonu kaybedersen kaybolur.'],
+    ['Bir şey satın aldım ama gelmedi.', 'Oyunu internete bağlıyken aç: satın alma Google Play onaylar onaylamaz eklenir, bu biraz sürebilir. Google Play onaylayamazsa Google birkaç gün içinde ücreti kendiliğinden iade eder. Hâlâ gelmediyse Google Play makbuzundaki sipariş numarasıyla (GPA. ile başlar) bize yaz.'],
+    ['Nasıl iade alırım?', 'Satın almalar Google Play üzerinden yapıldığı için iadeler de Google üzerinden yapılır: <a href="https://play.google.com/store/account/orderhistory" rel="noopener">Google Play sipariş geçmişini</a> aç ve "Geri ödeme iste"yi seç. Google yardımcı olamazsa bize yaz.'],
+    ["VIP'yi nasıl iptal ederim?", 'Google Play uygulamasında profil resmine dokun, ardından <b>Ödemeler ve abonelikler &gt; Abonelikler</b> bölümünde oyunu seç ve iptal et. VIP, ödediğin dönemin sonuna kadar etkin kalır. Oyunu silmek aboneliği iptal etmez.'],
+    ['Hesabımı nasıl silerim?', `Oyunda: <b>Ayarlar &gt; Hesabı sil</b>. Ya da e-postayla: ne yazacağın <a href="${deletion}">hesabını silmek</a> bölümünde (İngilizce).`],
+    ['Rakiplerim gerçek oyuncular mı?', 'Dereceli oyunda önce gerçek bir oyuncu ararız. Kimse boşta değilse bir yapay zekâ pilotla yarışırsın; adının yanında <b>AI</b> etiketi olur, yani her zaman bilirsin.'],
+    ['Birinin adı rahatsız edici.', 'Sıralamada oyuncunun adına dokun ve bildir. Birkaç bildirimden sonra ad nötr bir adla değiştirilir. Oyuncuya kimin bildirdiği söylenmez.'],
+    ['İnternetsiz oynayabilir miyim?', 'Evet. Antrenman ve yapay zekâ pilotlara karşı maçlar çevrimdışı çalışır. Diğer oyunculara karşı dereceli yarışlar, arkadaşlar ve sıralama için bağlantı gerekir.'],
+    ['Bildirimleri nasıl kapatırım?', 'Günlük hatırlatmanın <b>Ayarlar</b>da bir anahtarı var. Oyunun tüm bildirimlerini telefonunun ayarlarından da kapatabilirsin.'],
+  ],
+};
+---
+<Layout lang={lang} path="support/" title={`${t.support} · ${studio.name}`} description={t.supportIntro}>
+  <div class="wrap doc">
+    <h1>{t.support}</h1>
+    <p class="lead">{t.supportIntro}</p>
+    <p class="muted">{lang === 'en' ? `The answers are about ${os.name}.` : `Yanıtlar ${os.name} içindir.`}</p>
+    <div class="faq">
+      {faq[lang].map(([q, a]) => (
+        <details>
+          <summary>{q}</summary>
+          <p set:html={a} />
+        </details>
+      ))}
+    </div>
+    <section class="help-card">
+      <h2>{t.supportWrite}</h2>
+      <p>{t.supportWriteBody}</p>
+      <ul>{t.supportInclude.map((i) => <li>{i}</li>)}</ul>
+      <p class="muted">{t.supportNever}</p>
+      <p><a class="btn" href={mail}>{studio.email}</a></p>
+    </section>
+    <p class="muted"><a href={page(lang, 'terms/')}>{t.terms}</a> · <a href={asset(os.privacy)}>{t.privacy}</a></p>
+  </div>
+</Layout>

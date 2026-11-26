@@ -1,0 +1,148 @@
+---
+// Terms of Service for every Tovrix Studio game. Each game's legal section links here.
+import Layout from '../layouts/Layout.astro';
+import { games, studio, text, type Lang } from '../data/site';
+import { asset, page } from '../lib/paths';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = text[lang];
+const updated = '2026-11-27';
+const mail = `mailto:${studio.email}`;
+---
+<Layout lang={lang} path="terms/" title={`${t.terms} · ${studio.name}`} description={t.termsIntro}>
+  <div class="wrap doc">
+    {lang === 'en' ? (
+      <>
+        <h1>Terms of Service</h1>
+        <p class="muted">Last updated {updated}. These terms apply to every game published by Tovrix Studio: {games.map((g) => g.name).join(', ')}. They are also available in <a href={page('tr', 'terms/')} hreflang="tr" lang="tr">Turkish</a>; both versions say the same.</p>
+
+        <h2>1. Who we are</h2>
+        <p>Tovrix Studio ("we", "us") is an independent game studio at {studio.address}. You can reach us at <a href={mail}>{studio.email}</a>. By installing or playing one of our games you agree to these terms. If you do not agree, please do not play.</p>
+
+        <h2>2. Age</h2>
+        <p>Our games are meant for players aged 13 and over. If you are under 18, ask a parent or guardian before you buy anything in a game, and they agree to these terms for you.</p>
+
+        <h2>3. Your account</h2>
+        <ul>
+          <li>When you first open a game, it creates a guest account for that phone. If you uninstall the game or lose the phone without signing in, the progress of a guest account cannot be recovered. Sign in (with email or Google) under <b>Settings &gt; Account</b> to keep your progress safe and to play on another phone.</li>
+          <li>One account is for one person. Keep your sign-in to yourself.</li>
+          <li>You can delete your account at any time in the game or by email, as described in each game's privacy policy.</li>
+        </ul>
+
+        <h2>4. Playing fair</h2>
+        <p>Do not:</p>
+        <ul>
+          <li>cheat, use modified versions of a game, bots or tools that play for you, or exploit bugs to gain an advantage;</li>
+          <li>attack, overload or try to get around the protections of our servers;</li>
+          <li>choose a nickname that is offensive, hateful, sexual, impersonates someone else or contains personal data;</li>
+          <li>buy, sell or trade accounts or game items outside the game.</li>
+        </ul>
+        <p>A nickname that other players report several times is replaced by a neutral one. If you break these rules we may reset the progress gained by breaking them, or suspend or close the account. We tell you why by email if you have signed in, and you can write to us if you think we got it wrong.</p>
+
+        <h2>5. Game items and currency</h2>
+        <p>Coins, gems, cards, crates, skins and other game items are a personal, limited licence to use them in the game. They have no value in money, cannot be exchanged for money, and cannot be moved to another account. We keep improving our games, so we may change how items work, their balance and their prices. If we change something you paid for in a way that takes away what you bought, you can ask us for a fair solution.</p>
+        <p>Some crates contain items chosen at random. Each game shows the chances of its random rewards before you buy them (in Orbit Stackers under "Drop rates" in the shop).</p>
+
+        <h2>6. Purchases</h2>
+        <ul>
+          <li>Purchases for real money are made through Google Play and are also subject to Google Play's terms. We never see your payment details.</li>
+          <li>A purchase is added to your account once Google Play has confirmed it. If it does not arrive, open the game while you are online; if Google Play cannot confirm it, Google refunds it.</li>
+          <li>Game items are digital content that is delivered at once. Where the law allows, by buying you ask for delivery to start immediately and accept that the right of withdrawal ends once the item is delivered. This does not limit any right the law of your country gives you.</li>
+          <li>Refunds are handled by Google Play under its refund policy. You can also write to us.</li>
+          <li>A subscription (such as VIP) renews automatically until you cancel it in Google Play. Cancelling stops the next renewal; the current period runs to its end.</li>
+        </ul>
+
+        <h2>7. Ads</h2>
+        <p>Our games show an ad only when you choose to watch one for a reward. Ads come from Google and are covered by Google's policies and the privacy policy of the game.</p>
+
+        <h2>8. The service</h2>
+        <p>We try to keep online play running, but it can be interrupted for maintenance or by problems we do not control, and we do not promise that it is always available or free of errors. We may change, add or remove features. If we stop running a game's online service, we will say so in the game at least 30 days before.</p>
+
+        <h2>9. Our rights</h2>
+        <p>The games, their code, art, music, names and logos belong to Tovrix Studio. You may use the files on our <a href={page('en', 'brand/')}>brand page</a> when you write about us or our games, and you may share videos and screenshots of your own play.</p>
+
+        <h2>10. Liability</h2>
+        <p>The games are provided as they are. To the extent the law allows, we are not liable for indirect damages or for the loss of game progress or items caused by events outside our control. Nothing in these terms limits liability that the law does not allow to be limited, or the rights you have as a consumer.</p>
+
+        <h2>11. Privacy</h2>
+        <p>How each game handles your data is described in its privacy policy:</p>
+        <ul>{games.map((g) => <li><a href={asset(g.privacy)}>{g.name}: {t.privacy}</a></li>)}</ul>
+
+        <h2>12. Changes</h2>
+        <p>If we change these terms, we update this page and the date at the top. For a change that affects you significantly, we also tell you in the game before it applies. If you keep playing after it applies, the new terms apply to you.</p>
+
+        <h2>13. Law and disputes</h2>
+        <p>These terms are governed by the law of the Republic of Türkiye, and the courts of Ankara are competent. If you are a consumer, you can also turn to the consumer arbitration committees and consumer courts where you live, and the mandatory consumer protection law of the country you live in continues to protect you. Please write to us first: most problems can be solved by email.</p>
+
+        <h2>14. Contact</h2>
+        <p>{studio.name}, {studio.address}, <a href={mail}>{studio.email}</a></p>
+      </>
+    ) : (
+      <>
+        <h1>Kullanım Koşulları</h1>
+        <p class="muted">Son güncelleme {updated}. Bu koşullar Tovrix Studio'nun yayınladığı tüm oyunlar için geçerlidir: {games.map((g) => g.name).join(', ')}. <a href={page('en', 'terms/')} hreflang="en" lang="en">İngilizcesi</a> de var; iki metin aynı şeyi söyler.</p>
+
+        <h2>1. Biz kimiz</h2>
+        <p>Tovrix Studio ("biz") {studio.address} adresinde bağımsız bir oyun stüdyosudur. Bize <a href={mail}>{studio.email}</a> adresinden ulaşabilirsin. Oyunlarımızdan birini yükleyerek ya da oynayarak bu koşulları kabul etmiş olursun. Kabul etmiyorsan lütfen oynama.</p>
+
+        <h2>2. Yaş</h2>
+        <p>Oyunlarımız 13 yaş ve üzeri oyuncular içindir. 18 yaşından küçüksen bir oyunda bir şey satın almadan önce ebeveynine ya da vasine sor; bu koşulları senin adına onlar kabul eder.</p>
+
+        <h2>3. Hesabın</h2>
+        <ul>
+          <li>Bir oyunu ilk açtığında o telefon için bir misafir hesap oluşturulur. Giriş yapmadan oyunu siler ya da telefonu kaybedersen misafir hesabın ilerlemesi geri getirilemez. İlerlemeni korumak ve başka bir telefonda oynamak için <b>Ayarlar &gt; Hesap</b> bölümünden (e-posta ya da Google ile) giriş yap.</li>
+          <li>Bir hesap bir kişi içindir. Giriş bilgilerini kimseyle paylaşma.</li>
+          <li>Hesabını istediğin zaman oyunun içinden ya da e-postayla silebilirsin; nasıl yapılacağı her oyunun gizlilik politikasında yazar.</li>
+        </ul>
+
+        <h2>4. Adil oyun</h2>
+        <p>Şunları yapma:</p>
+        <ul>
+          <li>hile yapmak, oyunların değiştirilmiş sürümlerini, senin yerine oynayan bot ya da araçları kullanmak veya avantaj sağlamak için hatalardan yararlanmak;</li>
+          <li>sunucularımıza saldırmak, onları aşırı yüklemek ya da korumalarını aşmaya çalışmak;</li>
+          <li>hakaret, nefret ya da cinsellik içeren, başkasını taklit eden veya kişisel veri içeren bir takma ad seçmek;</li>
+          <li>hesapları ya da oyun öğelerini oyun dışında satmak, satın almak veya takas etmek.</li>
+        </ul>
+        <p>Diğer oyuncuların birkaç kez bildirdiği bir takma ad nötr bir adla değiştirilir. Bu kurallara uymazsan kurallar çiğnenerek kazanılan ilerlemeyi sıfırlayabilir, hesabı askıya alabilir ya da kapatabiliriz. Giriş yaptıysan nedenini e-postayla bildiririz; yanıldığımızı düşünüyorsan bize yazabilirsin.</p>
+
+        <h2>5. Oyun öğeleri ve para birimleri</h2>
+        <p>Altınlar, elmaslar, kartlar, sandıklar, görünümler ve diğer oyun öğeleri, bunları oyun içinde kullanman için sana verilen kişisel ve sınırlı bir lisanstır. Parasal değerleri yoktur, paraya çevrilemez ve başka bir hesaba aktarılamazlar. Oyunlarımızı sürekli geliştirdiğimiz için öğelerin işleyişini, dengesini ve fiyatlarını değiştirebiliriz. Parasını ödediğin bir şeyi, satın aldığını elinden alacak şekilde değiştirirsek bizden adil bir çözüm isteyebilirsin.</p>
+        <p>Bazı sandıklar rastgele seçilen öğeler içerir. Her oyun, rastgele ödüllerin çıkma olasılıklarını satın almadan önce gösterir (Orbit Stackers'ta mağazadaki "Düşme oranları" bölümünde).</p>
+
+        <h2>6. Satın almalar</h2>
+        <ul>
+          <li>Gerçek parayla yapılan satın almalar Google Play üzerinden yapılır ve Google Play'in koşullarına da tabidir. Ödeme bilgilerini hiçbir zaman görmeyiz.</li>
+          <li>Bir satın alma, Google Play onayladıktan sonra hesabına eklenir. Gelmezse oyunu internete bağlıyken aç; Google Play onaylayamazsa Google ücreti iade eder.</li>
+          <li>Oyun öğeleri anında teslim edilen dijital içeriktir. Mevzuatın izin verdiği ölçüde, satın alarak teslimatın hemen başlamasını istemiş ve öğe teslim edildiğinde cayma hakkının sona erdiğini kabul etmiş olursun. Bu, yaşadığın ülkenin yasalarının sana tanıdığı hiçbir hakkı sınırlamaz.</li>
+          <li>İadeler Google Play tarafından, onun iade politikasına göre yapılır. Bize de yazabilirsin.</li>
+          <li>Bir abonelik (VIP gibi) Google Play'den iptal edene kadar otomatik olarak yenilenir. İptal etmek bir sonraki yenilemeyi durdurur; içinde bulunduğun dönem sonuna kadar sürer.</li>
+        </ul>
+
+        <h2>7. Reklamlar</h2>
+        <p>Oyunlarımız yalnızca bir ödül için izlemeyi seçtiğinde reklam gösterir. Reklamlar Google'dan gelir; Google'ın politikalarına ve oyunun gizlilik politikasına tabidir.</p>
+
+        <h2>8. Hizmet</h2>
+        <p>Çevrimiçi oyunu çalışır tutmaya çalışırız; ancak bakım ya da elimizde olmayan sorunlar yüzünden kesilebilir ve her zaman erişilebilir ya da hatasız olacağına söz vermeyiz. Özellikleri değiştirebilir, ekleyebilir ya da kaldırabiliriz. Bir oyunun çevrimiçi hizmetini sonlandırırsak bunu oyunda en az 30 gün önceden duyururuz.</p>
+
+        <h2>9. Haklarımız</h2>
+        <p>Oyunlar; kodları, görselleri, müzikleri, adları ve logolarıyla Tovrix Studio'ya aittir. Bizi ya da oyunlarımızı anlatırken <a href={page('tr', 'brand/')}>marka sayfamızdaki</a> dosyaları kullanabilir, kendi oyununun videolarını ve ekran görüntülerini paylaşabilirsin.</p>
+
+        <h2>10. Sorumluluk</h2>
+        <p>Oyunlar olduğu gibi sunulur. Yasaların izin verdiği ölçüde dolaylı zararlardan ya da elimizde olmayan olayların yol açtığı oyun ilerlemesi veya öğe kayıplarından sorumlu değiliz. Bu koşullardaki hiçbir şey, yasaların sınırlanmasına izin vermediği sorumluluğu ya da tüketici olarak sahip olduğun hakları sınırlamaz.</p>
+
+        <h2>11. Gizlilik</h2>
+        <p>Her oyunun verilerine nasıl davrandığı kendi gizlilik politikasında yazar:</p>
+        <ul>{games.map((g) => <li><a href={asset(g.privacy)}>{g.name}: {t.privacy}</a> (İngilizce)</li>)}</ul>
+
+        <h2>12. Değişiklikler</h2>
+        <p>Bu koşulları değiştirirsek bu sayfayı ve en üstteki tarihi güncelleriz. Seni önemli ölçüde etkileyen bir değişikliği, yürürlüğe girmeden önce oyunda da bildiririz. Yürürlüğe girdikten sonra oynamaya devam edersen yeni koşullar senin için geçerli olur.</p>
+
+        <h2>13. Uygulanacak hukuk ve uyuşmazlıklar</h2>
+        <p>Bu koşullara Türkiye Cumhuriyeti hukuku uygulanır ve Ankara mahkemeleri yetkilidir. Tüketiciysen yaşadığın yerdeki tüketici hakem heyetlerine ve tüketici mahkemelerine de başvurabilirsin; yaşadığın ülkenin zorunlu tüketici koruma kuralları seni korumaya devam eder. Lütfen önce bize yaz: çoğu sorun e-postayla çözülür.</p>
+
+        <h2>14. İletişim</h2>
+        <p>{studio.name}, {studio.address}, <a href={mail}>{studio.email}</a></p>
+      </>
+    )}
+  </div>
+</Layout>

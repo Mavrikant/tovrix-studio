@@ -39,8 +39,10 @@ const t = text[lang];
     <section id="legal" class="section-tight legal">
       <h2>{t.legal}</h2>
       <ul>
+        <li><a href={page(lang, 'terms/')}>{t.terms}</a></li>
         <li><a href={asset(game.privacy)}>{t.privacy}</a></li>
         <li><a href={`${asset(game.privacy)}#deleting-your-account`}>{t.deletion}</a></li>
+        <li><a href={page(lang, 'support/')}>{t.support}</a></li>
       </ul>
       {t.legalNote && <p class="muted">{t.legalNote}</p>}
     </section>

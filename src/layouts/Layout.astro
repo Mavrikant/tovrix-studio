@@ -21,7 +21,8 @@ const site = Astro.site!.origin;
 const nav = [
   ['games', `#games`],
   ['studio', `#studio`],
-  ['brand', 'brand/'],
+  ['careers', 'careers/'],
+  ['support', 'support/'],
   ['contact', `#contact`],
 ] as const;
 const navHref = (h: string) => (h.startsWith('#') ? `${page(lang)}${h}` : page(lang, h));
@@ -74,6 +75,9 @@ const navHref = (h: string) => (h.startsWith('#') ? `${page(lang)}${h}` : page(l
           </div>
         </div>
         <ul class="foot-links">
+          <li><a href={page(lang, 'support/')}>{t.support}</a></li>
+          <li><a href={page(lang, 'careers/')}>{t.careers}</a></li>
+          <li><a href={page(lang, 'terms/')}>{t.terms}</a></li>
           <li><a href={page(lang, 'privacy/')}>{t.sitePrivacy}</a></li>
           <li><button type="button" class="linkish" data-consent-open>{t.cookieSettings}</button></li>
           <li><a href={page(lang, 'brand/')}>{t.nav.brand}</a></li>
