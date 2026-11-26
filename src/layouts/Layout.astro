@@ -1,0 +1,138 @@
+---
+import '@fontsource-variable/outfit';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import Mark from '../components/Mark.astro';
+import { GA_ID, studio, text, type Lang } from '../data/site';
+import { asset, page } from '../lib/paths';
+
+interface Props {
+  lang: Lang;
+  /** the page's path without language prefix: '' for home, 'brand/' */
+  path: string;
+  title: string;
+  description: string;
+  image?: string;
+}
+const { lang, path, title, description, image = 'brand/og-image.png' } = Astro.props;
+const t = text[lang];
+const other: Lang = lang === 'en' ? 'tr' : 'en';
+const site = Astro.site!.origin;
+const nav = [
+  ['games', `#games`],
+  ['studio', `#studio`],
+  ['brand', 'brand/'],
+  ['contact', `#contact`],
+] as const;
+const navHref = (h: string) => (h.startsWith('#') ? `${page(lang)}${h}` : page(lang, h));
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={`${site}${page(lang, path)}`} />
+    <link rel="alternate" hreflang="en" href={`${site}${page('en', path)}`} />
+    <link rel="alternate" hreflang="tr" href={`${site}${page('tr', path)}`} />
+    <link rel="icon" href={asset('brand/tovrix-icon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={asset('brand/tovrix-icon-180.png')} />
+    <meta name="theme-color" content="#1B2A4A" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={studio.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${site}${asset(image)}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a class="skip" href="#main">{lang === "tr" ? "İçeriğe geç" : "Skip to content"}</a>
+    <header class="top">
+      <div class="wrap">
+        <a class="brand" href={page(lang)} aria-label={studio.name}>
+          <Mark size={34} />
+          <span class="wordmark"><b>Tovrix</b> Studio</span>
+        </a>
+        <nav aria-label="Main">
+          {nav.map(([k, h]) => <a href={navHref(h)}>{t.nav[k]}</a>)}
+          <a class="lang" href={page(other, path)} hreflang={other} lang={other}>{t.otherLabel}</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="bottom">
+      <div class="wrap">
+        <div class="foot-brand">
+          <Mark size={28} />
+          <div>
+            <p><b>{studio.name}</b></p>
+            <p>{studio.address}</p>
+            <p><a href={`mailto:${studio.email}`}>{studio.email}</a></p>
+          </div>
+        </div>
+        <ul class="foot-links">
+          <li><a href={page(lang, 'privacy/')}>{t.sitePrivacy}</a></li>
+          <li><button type="button" class="linkish" data-consent-open>{t.cookieSettings}</button></li>
+          <li><a href={page(lang, 'brand/')}>{t.nav.brand}</a></li>
+        </ul>
+        <p class="copy">© {studio.founded} {studio.name}</p>
+      </div>
+    </footer>
+
+    <div class="consent" role="dialog" aria-live="polite" aria-label={t.cookieSettings} hidden data-consent>
+      <p>{t.consentText} <a href={page(lang, 'privacy/')}>{t.consentMore}</a></p>
+      <div class="consent-actions">
+        <button type="button" class="btn ghost" data-consent-choice="denied">{t.consentReject}</button>
+        <button type="button" class="btn" data-consent-choice="granted">{t.consentAccept}</button>
+      </div>
+    </div>
+
+    <script is:inline define:vars={{ GA_ID }}>
+      // Google Analytics starts only after the visitor allows it; the choice stays in this browser.
+      (function () {
+        var KEY = 'tovrix-consent';
+        var box = document.querySelector('[data-consent]');
+        var read = function () { try { return localStorage.getItem(KEY); } catch (e) { return null; } };
+        var started = false;
+        var start = function () {
+          if (started) return;
+          started = true;
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', GA_ID, { anonymize_ip: true });
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(s);
+        };
+        var choice = read();
+        if (choice === 'granted') start();
+        else if (choice !== 'denied') box.hidden = false;
+        document.querySelectorAll('[data-consent-choice]').forEach(function (b) {
+          b.addEventListener('click', function () {
+            var v = b.getAttribute('data-consent-choice');
+            try { localStorage.setItem(KEY, v); } catch (e) {}
+            box.hidden = true;
+            if (v === 'granted') start();
+            else if (started) {
+              // withdrawing: stop and remove the cookies Analytics set on this site
+              window['ga-disable-' + GA_ID] = true;
+              document.cookie.split(';').forEach(function (c) {
+                var n = c.split('=')[0].trim();
+                if (n.indexOf('_ga') === 0) document.cookie = n + '=; Max-Age=0; path=/; domain=' + location.hostname.replace(/^www\./, '.');
+                if (n.indexOf('_ga') === 0) document.cookie = n + '=; Max-Age=0; path=/';
+              });
+            }
+          });
+        });
+        document.querySelectorAll('[data-consent-open]').forEach(function (b) {
+          b.addEventListener('click', function () { box.hidden = false; });
+        });
+      })();
+    </script>
+  </body>
+</html>

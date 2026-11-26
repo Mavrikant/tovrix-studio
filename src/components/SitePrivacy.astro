@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { games, studio, text, type Lang } from '../data/site';
+import { asset } from '../lib/paths';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = text[lang];
+const updated = '2026-11-27';
+---
+<Layout lang={lang} path="privacy/" title={`${t.sitePrivacy} · ${studio.name}`} description={t.sitePrivacy}>
+  <div class="wrap doc">
+    {lang === 'en' ? (
+      <>
+        <h1>Website privacy</h1>
+        <p class="muted">Last updated {updated}. This page is about this website only. Each game has its own privacy policy, linked below.</p>
+        <h2>Without your consent</h2>
+        <p>The site sets no cookies and stores nothing about you. Its fonts and images are served from this site, not from third parties. The site is hosted by GitHub Pages (GitHub, Inc.), which, like any web server, receives your IP address with each request and may keep it in its logs for security.</p>
+        <h2>With your consent: Google Analytics</h2>
+        <p>If you choose "Allow analytics", the site loads Google Analytics (Google Ireland Limited / Google LLC) to count visits. It sets cookies whose names start with <code>_ga</code> and sends Google the pages you view, your browser and device type, the site you came from and an approximate location derived from your IP address. We use it only to see how many people visit and which pages they read. It runs only after you agree, and your choice is kept in this browser.</p>
+        <p>You can change your mind at any time with "Cookie settings" at the bottom of every page; choosing "No thanks" stops Analytics and removes its cookies from this site. Google Analytics keeps the data for at most 14 months.</p>
+        <h2>Your rights</h2>
+        <p>You can ask us what we hold about you, ask for it to be corrected or deleted, or object to its use, under the GDPR and Türkiye's KVKK. Write to <a href={`mailto:${studio.email}`}>{studio.email}</a>.</p>
+        <h2>Games</h2>
+        <ul>{games.map((g) => <li><a href={asset(g.privacy)}>{g.name}: {t.privacy}</a></li>)}</ul>
+        <h2>Contact</h2>
+        <p>{studio.name}, {studio.address}, <a href={`mailto:${studio.email}`}>{studio.email}</a></p>
+      </>
+    ) : (
+      <>
+        <h1>Site gizliliği</h1>
+        <p class="muted">Son güncelleme {updated}. Bu sayfa yalnızca bu web sitesiyle ilgilidir. Her oyunun kendi gizlilik politikası var; bağlantıları aşağıda.</p>
+        <h2>Onay vermezsen</h2>
+        <p>Site çerez bırakmaz ve senin hakkında hiçbir şey saklamaz. Yazı tipleri ve görseller üçüncü taraflardan değil bu siteden sunulur. Site GitHub Pages (GitHub, Inc.) üzerinde barınır; her web sunucusu gibi her istekte IP adresini alır ve güvenlik için kayıtlarında tutabilir.</p>
+        <h2>Onay verirsen: Google Analytics</h2>
+        <p>"Analitiğe izin ver"i seçersen site, ziyaretleri saymak için Google Analytics'i (Google Ireland Limited / Google LLC) yükler. Adı <code>_ga</code> ile başlayan çerezler bırakır ve Google'a görüntülediğin sayfaları, tarayıcı ve cihaz türünü, geldiğin siteyi ve IP adresinden çıkarılan yaklaşık konumu gönderir. Bunu yalnızca kaç kişinin geldiğini ve hangi sayfaları okuduğunu görmek için kullanırız. Ancak onay verdikten sonra çalışır; seçimin bu tarayıcıda saklanır.</p>
+        <p>Fikrini istediğin zaman her sayfanın altındaki "Çerez ayarları" ile değiştirebilirsin; "Hayır, teşekkürler" Analytics'i durdurur ve çerezlerini bu siteden siler. Google Analytics veriyi en fazla 14 ay saklar.</p>
+        <h2>Hakların</h2>
+        <p>KVKK ve GDPR kapsamında hakkında ne tuttuğumuzu öğrenebilir, düzeltilmesini ya da silinmesini isteyebilir, kullanımına itiraz edebilirsin. <a href={`mailto:${studio.email}`}>{studio.email}</a> adresine yaz.</p>
+        <h2>Oyunlar</h2>
+        <ul>{games.map((g) => <li><a href={asset(g.privacy)}>{g.name}: {t.privacy}</a> (İngilizce)</li>)}</ul>
+        <h2>İletişim</h2>
+        <p>{studio.name}, {studio.address}, <a href={`mailto:${studio.email}`}>{studio.email}</a></p>
+      </>
+    )}
+  </div>
+</Layout>

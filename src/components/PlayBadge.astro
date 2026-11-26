@@ -1,0 +1,18 @@
+---
+import type { Game, Lang } from '../data/site';
+import { text } from '../data/site';
+import { asset } from '../lib/paths';
+interface Props { game: Game; lang: Lang; note?: boolean }
+const { game, lang, note = false } = Astro.props;
+const t = text[lang];
+---
+{game.play && (
+  <div class="download">
+    <a class="play-badge" href={game.play} rel="noopener">
+      <img src={asset(`badges/google-play-${lang}.png`)} alt={lang === 'tr' ? "Google Play'den alın" : 'Get it on Google Play'} width="194" height="75" />
+    </a>
+    {game.testing && note && (
+      <p class="test-note">{t.testingNote} <a href={game.testing} rel="noopener">{t.joinTest} →</a></p>
+    )}
+  </div>
+)}

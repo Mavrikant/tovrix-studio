@@ -1,0 +1,27 @@
+---
+import type { Game, Lang } from '../data/site';
+import { text } from '../data/site';
+import { asset, page } from '../lib/paths';
+import PlayBadge from './PlayBadge.astro';
+interface Props { game: Game; lang: Lang }
+const { game, lang } = Astro.props;
+const c = game.text[lang];
+const t = text[lang];
+---
+<article class="game-card">
+  <a class="game-art" href={page(lang, `${game.slug}/`)} tabindex="-1" aria-hidden="true">
+    <img src={asset(game.feature)} alt="" width="1024" height="500" loading="lazy" />
+  </a>
+  <div class="game-body">
+    <img class="game-icon" src={asset(game.icon)} alt="" width="72" height="72" loading="lazy" />
+    <div>
+      <h3><a href={page(lang, `${game.slug}/`)}>{game.name}</a></h3>
+      <p>{c.short}</p>
+      <span class="chip">{c.status}</span>
+    </div>
+  </div>
+  <div class="game-foot">
+    <PlayBadge game={game} lang={lang} />
+    <a class="more" href={page(lang, `${game.slug}/`)}>{t.seeGame} →</a>
+  </div>
+</article>
