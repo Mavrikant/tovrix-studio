@@ -69,7 +69,7 @@ section { padding: 40px 0 0; }
 /* team */
 .team { list-style: none; padding: 0; margin: 16px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; }
 .person { display: flex; align-items: center; gap: 14px; padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
-.avatar { flex: none; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: var(--accent); background: var(--accent-soft); }
+.avatar { flex: none; width: 64px; height: 64px; border-radius: 50%; object-fit: cover; background: var(--accent-soft); border: 2px solid var(--line); }
 .contact { font-size: 18px; }
 
 /* product page */

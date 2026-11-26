@@ -80,7 +80,7 @@ function homePage(lang) {
     .join('\n');
   const team = studio.team
     .map(
-      (m) => `<li class="person"><span class="avatar" aria-hidden="true">${esc(m.initials)}</span>
+      (m) => `<li class="person"><img class="avatar" src="${up}${m.photo}" alt="" width="64" height="64" loading="lazy">
 <div><h3>${esc(m.name)}</h3><a href="${m.linkedin}" rel="noopener">LinkedIn</a></div></li>`,
     )
     .join('\n');
