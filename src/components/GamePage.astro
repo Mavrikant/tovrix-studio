@@ -17,11 +17,11 @@ const t = text[lang];
         <h1>{game.name}</h1>
         <p class="lead">{c.short}</p>
         <span class="chip">{c.status}</span>
+        <div class="download-box">
+          <h2 class="visually-hidden">{t.download}</h2>
+          <PlayBadge game={game} lang={lang} note />
+        </div>
       </div>
-    </section>
-    <section class="download-box">
-      <h2 class="visually-hidden">{t.download}</h2>
-      <PlayBadge game={game} lang={lang} note />
     </section>
     <img class="feature-graphic" src={asset(game.feature)} alt={game.name} width="1024" height="500" />
     <section class="section-tight"><h2>{c.lead}</h2><p class="body">{c.body}</p></section>
