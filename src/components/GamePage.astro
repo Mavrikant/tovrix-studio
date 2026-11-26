@@ -8,7 +8,13 @@ const { game, lang } = Astro.props;
 const c = game.text[lang];
 const t = text[lang];
 ---
-<Layout lang={lang} path={`${game.slug}/`} title={`${game.name} · ${studio.name}`} description={c.short} image={game.feature}>
+<Layout lang={lang} path={`${game.slug}/`} title={`${game.name} · ${studio.name}`} description={c.short} image={game.collage[lang]}>
+  <div class="game-hero">
+    <picture>
+      <source media="(max-width: 640px)" srcset={asset(game.collage[lang].replace('.jpg', '-m.jpg'))} width="900" height="749" />
+      <img src={asset(game.collage[lang])} srcset={`${asset(game.collage[lang].replace('.jpg', '-1200.jpg'))} 1200w, ${asset(game.collage[lang])} 2000w`} sizes="(min-width: 1440px) 1440px, 100vw" alt={t.collageAlt} width="2000" height="916" fetchpriority="high" />
+    </picture>
+  </div>
   <div class="wrap">
     <p class="crumb"><a href={`${page(lang)}#games`}>← {t.back}</a></p>
     <section class="product-head">
@@ -16,14 +22,12 @@ const t = text[lang];
       <div>
         <h1>{game.name}</h1>
         <p class="lead">{c.short}</p>
-        <span class="chip">{c.status}</span>
         <div class="download-box">
           <h2 class="visually-hidden">{t.download}</h2>
           <PlayBadge game={game} lang={lang} note />
         </div>
       </div>
     </section>
-    <img class="feature-graphic" src={asset(game.feature)} alt={game.name} width="1024" height="500" />
     <section class="section-tight"><h2>{c.lead}</h2><p class="body">{c.body}</p></section>
     <section class="features">
       {c.features.map(([h, items]) => (
@@ -33,7 +37,7 @@ const t = text[lang];
     <section class="section-tight">
       <h2>{t.screenshots}</h2>
       <div class="shots">
-        {game.screenshots.map((s) => <img src={asset(s)} alt="" width="270" height="480" loading="lazy" />)}
+        {game.screenshots(lang).map((s) => <img src={asset(s)} alt="" width="540" height="1170" loading="lazy" />)}
       </div>
     </section>
     <section id="legal" class="section-tight legal">
