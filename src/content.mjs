@@ -5,9 +5,10 @@ export const studio = {
   name: 'Tovrix Studio',
   email: 'tovrixstudio@gmail.com',
   address: 'ODTÜ Teknokent, Ankara, Türkiye',
+  // photos are the members' LinkedIn profile pictures, 240 px
   team: [
-    { name: 'M. Serdar Karaman', initials: 'SK', linkedin: 'https://www.linkedin.com/in/mserdarkaraman/' },
-    { name: 'Onur Çelebi', initials: 'OÇ', linkedin: 'https://www.linkedin.com/in/onur-celebi-software/' },
+    { name: 'Onur Çelebi', photo: 'assets/team/onur-celebi.jpg', linkedin: 'https://www.linkedin.com/in/onur-celebi-software/' },
+    { name: 'M. Serdar Karaman', photo: 'assets/team/serdar-karaman.jpg', linkedin: 'https://www.linkedin.com/in/mserdarkaraman/' },
   ],
 };
 
